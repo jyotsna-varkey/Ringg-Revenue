@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ringg AI — Revenue Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f6f4ef;--s1:#eceae3;--s2:#e2dfd6;--s3:#d5d1c6;
+  --ink:#18170f;--muted:#6e6c61;--faint:#aba89c;
+  --border:rgba(24,23,15,0.09);--border2:rgba(24,23,15,0.15);
+  --green:#1a6b50;--green-dim:rgba(26,107,80,0.07);--green-border:rgba(26,107,80,0.18);
+  --amber:#9e5c0a;--amber-dim:rgba(158,92,10,0.07);--amber-border:rgba(158,92,10,0.18);
+  --font:'Outfit',sans-serif;
+  --serif:'Lora',serif;
+  --mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:rgba(246,244,239,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-left{display:flex;align-items:center;gap:10px}
+.nav-ring{width:26px;height:26px;border-radius:50%;background:var(--green);display:grid;place-items:center;flex-shrink:0}
+.nav-ring svg{width:13px;height:13px}
+.nav-name{font-size:13px;font-weight:600;letter-spacing:-0.1px}
+.nav-pipe{width:1px;height:16px;background:var(--border2);margin:0 12px}
+.nav-label{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.nav-links{display:flex;gap:28px}
+.nav-link{font-size:12px;color:var(--muted);text-decoration:none;font-weight:500;transition:color 0.15s}
+.nav-link:hover{color:var(--ink)}
+
+/* HERO */
+.hero{max-width:760px;margin:0 auto;padding:96px 52px 72px}
+.hero-tag{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:28px}
+.hero-title{font-family:var(--serif);font-size:48px;line-height:1.08;letter-spacing:-0.5px;margin-bottom:28px;font-weight:400}
+.hero-title em{font-style:italic}
+.hero-body{font-size:15px;color:var(--muted);line-height:1.8;max-width:600px}
+
+/* DIVIDER */
+.divider{max-width:760px;margin:0 auto;padding:0 52px}
+.divider hr{border:none;border-top:1px solid var(--border)}
+
+/* SECTION */
+.section{max-width:760px;margin:0 auto;padding:64px 52px}
+.sec-tag{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.sec-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.sec-dot.amber{background:var(--amber)}
+.sec-title{font-family:var(--serif);font-size:34px;font-weight:400;letter-spacing:-0.4px;margin-bottom:18px;line-height:1.15}
+.sec-title em{font-style:italic}
+.sec-body{font-size:14px;color:var(--muted);line-height:1.8}
+
+/* CALLOUT */
+.callout{border-left:3px solid var(--green);padding:16px 20px;margin:28px 0;background:var(--green-dim);border-radius:0 8px 8px 0}
+.callout.amber{border-left-color:var(--amber);background:var(--amber-dim)}
+.callout-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:7px}
+.callout.amber .callout-label{color:var(--amber)}
+.callout-text{font-size:13px;line-height:1.7;color:var(--ink)}
+.callout-text strong{font-weight:600}
+
+/* TABS */
+.tabs-wrap{margin:32px 0}
+.tabs-nav{display:flex;gap:0;border:1px solid var(--border2);border-radius:10px 10px 0 0;overflow:hidden;background:var(--s2)}
+.tab-btn{flex:1;padding:12px 10px;font-family:var(--font);font-size:12px;font-weight:500;color:var(--muted);background:transparent;border:none;border-right:1px solid var(--border);cursor:pointer;transition:all 0.15s;text-align:center;line-height:1.3}
+.tab-btn:last-child{border-right:none}
+.tab-btn:hover{background:var(--s1);color:var(--ink)}
+.tab-btn.active{background:var(--bg);color:var(--ink);font-weight:600;border-bottom:2px solid var(--green);padding-bottom:10px}
+.tabs-content{border:1px solid var(--border2);border-top:none;border-radius:0 0 10px 10px;background:var(--bg);overflow:hidden}
+.tab-panel{display:none;padding:28px 28px 24px}
+.tab-panel.active{display:block}
+.tab-panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px}
+.tp-col-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:8px}
+.tp-col-text{font-size:13px;color:var(--ink);line-height:1.65}
+.tp-col-text ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.tp-col-text ul li{padding-left:14px;position:relative}
+.tp-col-text ul li::before{content:'—';position:absolute;left:0;color:var(--faint);font-size:11px}
+.tab-ask{background:var(--green-dim);border:1px solid var(--green-border);border-radius:8px;padding:14px 18px;margin-top:4px}
+.tab-ask.amber{background:var(--amber-dim);border-color:var(--amber-border)}
+.ask-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--green);margin-bottom:6px}
+.tab-ask.amber .ask-label{color:var(--amber)}
+.ask-text{font-size:13px;line-height:1.6;color:var(--ink)}
+.tab-priority{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;margin-bottom:12px}
+.pri-high{background:var(--green-dim);color:var(--green);border:1px solid var(--green-border)}
+.pri-med{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border)}
+
+/* PRICING CARDS */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}
+.p-card{border:1px solid var(--border2);border-radius:12px;overflow:hidden}
+.p-card.rec{border-color:var(--green)}
+.p-head{padding:18px 20px;border-bottom:1px solid var(--border);background:var(--s1)}
+.p-card.rec .p-head{background:var(--green-dim);border-bottom-color:var(--green-border)}
+.p-sublabel{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:5px}
+.p-name{font-size:15px;font-weight:600;margin-bottom:3px}
+.p-unit{font-size:12px;color:var(--muted)}
+.p-rec-tag{display:inline-block;margin-top:7px;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:3px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border)}
+.p-body{padding:16px 20px}
+.p-body p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:8px}
+.p-body p:last-child{margin-bottom:0}
+.p-point{font-size:12px;display:flex;align-items:flex-start;gap:6px;margin-bottom:5px;line-height:1.4}
+.p-point.good{color:var(--green)}
+.p-point.note{color:var(--muted)}
+
+/* NORTH STAR */
+.northstar{background:var(--ink);color:#f6f4ef;border-radius:16px;padding:40px 44px;margin:28px 0}
+.ns-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:rgba(246,244,239,0.35);margin-bottom:16px}
+.ns-title{font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.15;margin-bottom:8px;letter-spacing:-0.3px}
+.ns-title em{font-style:italic;color:rgba(26,107,80,0.85)}
+.ns-sub{font-size:14px;color:rgba(246,244,239,0.45);margin-bottom:32px;line-height:1.65}
+.ns-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;border-top:1px solid rgba(246,244,239,0.08);padding-top:24px}
+.ns-val{font-family:var(--serif);font-size:26px;font-weight:400;letter-spacing:-0.4px;color:rgba(26,107,80,0.85);margin-bottom:4px}
+.ns-label{font-size:12px;color:rgba(246,244,239,0.4);line-height:1.4}
+
+/* FOOTER */
+footer{max-width:760px;margin:0 auto;padding:52px 52px 72px;border-top:1px solid var(--border)}
+.footer-text{font-family:var(--mono);font-size:11px;color:var(--faint);line-height:1.7}
+
+/* FADE IN */
+.fade-in{opacity:0;transform:translateY(14px);transition:opacity 0.5s ease,transform 0.5s ease}
+.fade-in.visible{opacity:1;transform:none}
+
+@media(max-width:640px){
+  nav{padding:0 20px}
+  .hero,.section,.divider{padding-left:20px;padding-right:20px}
+  .hero{padding-top:56px;padding-bottom:48px}
+  .hero-title{font-size:32px}
+  .sec-title{font-size:26px}
+  .tabs-nav{flex-wrap:wrap}
+  .tab-btn{flex:none;width:50%}
+  .tab-panel-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .ns-metrics{grid-template-columns:1fr}
+  .northstar{padding:28px 24px}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <div class="nav-ring">
+      <svg viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="white" stroke-width="1.4"/><path d="M6.5 4v2.5l1.8 1.1" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </div>
+    <span class="nav-name">Ringg AI</span>
+    <div class="nav-pipe"></div>
+    <span class="nav-label">revenue-strategy.html</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="#channel">Channel Strategy</a>
+    <a class="nav-link" href="#pricing">Pricing Model</a>
+    <a class="nav-link" href="#north-star">North Star</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero fade-in">
+  <div class="hero-tag">Revenue Strategy · Ringg AI</div>
+  <h1 class="hero-title">On GTM<br>and pricing.</h1>
+  <div class="hero-body">
+    <p style="margin-bottom:16px">Went deep on Ringg's GTM and pricing. Two things stood out:</p>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span style="font-family:var(--mono);font-size:11px;color:var(--green);min-width:20px;margin-top:2px">01</span>
+        <span><strong style="color:var(--ink)">Channel strategy.</strong> Relationship-led GTM is the right foundation. But there's a parallel motion worth building — partnerships with platforms that already have the enterprise relationships Ringg is working to reach. Below is a breakdown of who those partners are and what the ask looks like for each.</span>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span style="font-family:var(--mono);font-size:11px;color:var(--green);min-width:20px;margin-top:2px">02</span>
+        <span><strong style="color:var(--ink)">Outcome-based pricing.</strong> Per-minute pricing works for SMBs. For enterprise BFSI, it creates procurement friction. Shifting to outcome-based pricing for enterprise customers — a broader trend in B2B SaaS — frames Ringg as an outcome-oriented service rather than a software tool, and removes the blocker that stalls deals in finance.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><hr></div>
+
+<!-- CHANNEL STRATEGY -->
+<div class="section fade-in" id="channel">
+  <div class="sec-tag"><span class="sec-dot"></span>01 — Channel Strategy</div>
+  <h2 class="sec-title">Building reach<br><em>through the right partners</em></h2>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px">
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--green);min-width:20px;margin-top:2px">01</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.6"><strong style="color:var(--ink)">Faster than hiring.</strong> One channel partnership can put Ringg in front of more customers faster than any individual sales hire. Credgenics alone has 150+ lenders. Getting into their platform is a different order of magnitude from closing one account at a time.</span>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--green);min-width:20px;margin-top:2px">02</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.6"><strong style="color:var(--ink)">Procurement friction disappears.</strong> When Ringg comes embedded in a platform the buyer already uses, most of the evaluation work is done. The vendor relationship is established, the integration is live, the security review is inherited. The buyer's decision becomes much simpler.</span>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--green);min-width:20px;margin-top:2px">03</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.6"><strong style="color:var(--ink)">The window is open now.</strong> The platforms below are all actively evaluating how to add AI voice to their stack. Some will build it, some will acquire, some will partner. Getting in before they've committed elsewhere is the moment of leverage — that window is roughly 12–18 months wide.</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">The asymmetry</div>
+    <div class="callout-text">Credgenics manages <strong>98M+ loan accounts across 150+ lenders</strong>. LeadSquared powers CRM for hundreds of BFSI companies. Firstsource runs collections operations for major banks. Each of them has the customer base Ringg wants to reach. None of them has a sub-330ms multilingual voice AI layer. That gap is the basis for genuine partnership — Ringg provides the capability, partners provide the reach.</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-wrap" id="partners">
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab(0)">Credgenics</button>
+      <button class="tab-btn" onclick="switchTab(1)">Spocto (Yubi)</button>
+      <button class="tab-btn" onclick="switchTab(2)">Firstsource</button>
+      <button class="tab-btn" onclick="switchTab(3)">LeadSquared</button>
+      <button class="tab-btn" onclick="switchTab(4)">Finflux (M2P)</button>
+    </div>
+    <div class="tabs-content">
+
+      <!-- CREDGENICS -->
+      <div class="tab-panel active">
+        <span class="tab-priority pri-high">● Highest priority</span>
+        <div class="tab-panel-grid">
+          <div>
+            <div class="tp-col-label">What they have</div>
+            <div class="tp-col-text"><ul>
+              <li>150+ bank, NBFC, and fintech lender clients</li>
+              <li>98M+ loan accounts managed in FY24</li>
+              <li>1.7B+ omnichannel communications facilitated annually</li>
+              <li>Just acquired Arrise to build a full-stack collections offering</li>
+              <li>Backed by Accel, WestBridge, Tanglin</li>
+            </ul></div>
+          </div>
+          <div>
+            <div class="tp-col-label">What the partnership looks like</div>
+            <div class="tp-col-text"><ul>
+              <li>Ringg embedded as the default outbound calling layer within Credgenics</li>
+              <li>Their clients access Ringg voice campaigns directly from inside the platform</li>
+              <li>Revenue share on call minutes consumed by their client base</li>
+              <li>Joint case study with a named shared NBFC client</li>
+              <li>Credgenics gets a stronger product; Ringg gets distribution to 150+ lenders without a separate sales motion for each one</li>
+            </ul></div>
+          </div>
+        </div>
+        <div class="tab-ask">
+          <div class="ask-label">The ask</div>
+          <div class="ask-text">Embed Ringg as Credgenics' native AI calling layer. A joint pilot with one shared client is the right starting point — measure RPC improvement and cost per account contacted vs. their current baseline, publish jointly.</div>
+        </div>
+      </div>
+
+      <!-- SPOCTO -->
+      <div class="tab-panel">
+        <span class="tab-priority pri-high">● High priority</span>
+        <div class="tab-panel-grid">
+          <div>
+            <div class="tp-col-label">What they have</div>
+            <div class="tp-col-text"><ul>
+              <li>80L+ accounts processed monthly</li>
+              <li>Deep relationships across lenders, ARCs, and debt buyers</li>
+              <li>Part of Yubi's broader debt management infrastructure</li>
+              <li>Strong presence in mid-market and SME lending</li>
+            </ul></div>
+          </div>
+          <div>
+            <div class="tp-col-label">What the partnership looks like</div>
+            <div class="tp-col-text"><ul>
+              <li>API integration with Spocto's collections workflow triggers</li>
+              <li>Ringg campaigns fire automatically when accounts enter DPD buckets</li>
+              <li>Call outcomes sync back into Spocto's reporting layer</li>
+              <li>Spocto's clients get automated multilingual calling without leaving the platform they already use</li>
+            </ul></div>
+          </div>
+        </div>
+        <div class="tab-ask">
+          <div class="ask-label">The ask</div>
+          <div class="ask-text">An API-level integration where DPD bucket changes in Spocto automatically trigger Ringg voice campaigns. Clean technical partnership with a clear value exchange on both sides.</div>
+        </div>
+      </div>
+
+      <!-- FIRSTSOURCE -->
+      <div class="tab-panel">
+        <span class="tab-priority pri-high">● High priority</span>
+        <div class="tab-panel-grid">
+          <div>
+            <div class="tp-col-label">What they have</div>
+            <div class="tp-col-text"><ul>
+              <li>28,000+ employees across BFSI, healthcare, telecom</li>
+              <li>ICICI Bank heritage — deep relationships with India's largest lenders</li>
+              <li>Outcome-based pricing models already in place with clients</li>
+              <li>Collections, customer service, and back-office at scale</li>
+            </ul></div>
+          </div>
+          <div>
+            <div class="tp-col-label">What the partnership looks like</div>
+            <div class="tp-col-text"><ul>
+              <li>Ringg powers the AI calling layer in a Firstsource human + AI hybrid model</li>
+              <li>Firstsource maintains client relationships and overall service contract</li>
+              <li>Ringg earns per-minute on all AI call volume through their operations</li>
+              <li>The pitch to Firstsource is simple: same client outcomes, significantly lower operating cost</li>
+            </ul></div>
+          </div>
+        </div>
+        <div class="tab-ask">
+          <div class="ask-label">The ask</div>
+          <div class="ask-text">A white-label arrangement where Ringg handles the AI layer and Firstsource maintains client relationships. A 90-day pilot with one shared BFSI client — measuring RPC rate and cost per account contacted vs. human-only baseline.</div>
+        </div>
+      </div>
+
+      <!-- LEADSQUARED -->
+      <div class="tab-panel">
+        <span class="tab-priority pri-med">· Medium priority</span>
+        <div class="tab-panel-grid">
+          <div>
+            <div class="tp-col-label">Current state</div>
+            <div class="tp-col-text"><ul>
+              <li>Ringg is already a listed LeadSquared integration</li>
+              <li>Basic API connection — not yet a co-sell or marketplace partnership</li>
+              <li>LeadSquared has hundreds of BFSI clients who would benefit from Ringg voice campaigns triggered directly from their CRM</li>
+            </ul></div>
+          </div>
+          <div>
+            <div class="tp-col-label">What deeper partnership looks like</div>
+            <div class="tp-col-text"><ul>
+              <li>Featured placement in LeadSquared's app marketplace</li>
+              <li>Co-sell motion: LeadSquared sales recommends Ringg to BFSI clients</li>
+              <li>Ringg campaigns triggerable directly from within LeadSquared workflows</li>
+              <li>Joint case studies with shared customers</li>
+            </ul></div>
+          </div>
+        </div>
+        <div class="tab-ask amber">
+          <div class="ask-label">The ask</div>
+          <div class="ask-text">Upgrade the existing technical integration into a formal co-sell partnership. Featured marketplace listing, shared BFSI pipeline, and one joint case study published within 90 days of signing.</div>
+        </div>
+      </div>
+
+      <!-- FINFLUX -->
+      <div class="tab-panel">
+        <span class="tab-priority pri-med">· Medium priority</span>
+        <div class="tab-panel-grid">
+          <div>
+            <div class="tp-col-label">Why LMS integration is strategic</div>
+            <div class="tp-col-text"><ul>
+              <li>The LMS is where DPD data lives and repayment status is tracked in real time</li>
+              <li>Collections triggers originate from the LMS — embedding Ringg here means zero-touch automation</li>
+              <li>An account moves into DPD → Ringg campaign fires automatically, no human presses anything</li>
+            </ul></div>
+          </div>
+          <div>
+            <div class="tp-col-label">Why Finflux specifically</div>
+            <div class="tp-col-text"><ul>
+              <li>Cloud-native and API-first — faster integration than legacy LMS players like Nucleus/FinnOne</li>
+              <li>Gaining traction with fintech NBFCs — exactly Ringg's ICP</li>
+              <li>Part of M2P's broader fintech infrastructure play, giving access to a larger ecosystem</li>
+            </ul></div>
+          </div>
+        </div>
+        <div class="tab-ask amber">
+          <div class="ask-label">The ask</div>
+          <div class="ask-text">API integration where DPD bucket changes in Finflux trigger Ringg campaigns automatically, with call outcomes syncing back. The client pitch: collections starts without anyone pressing a button.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"><hr></div>
+
+<!-- PRICING -->
+<div class="section fade-in" id="pricing">
+  <div class="sec-tag"><span class="sec-dot amber"></span>02 — Pricing Strategy</div>
+  <h2 class="sec-title">Selling outcomes,<br><em>not minutes</em></h2>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px">
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--amber);min-width:20px;margin-top:2px">01</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.6"><strong style="color:var(--ink)">Per-minute stalls enterprise deals.</strong> When the Collections Head takes a Ringg proposal to their CFO, the first question is: "what will this cost us?" Per-minute pricing requires modelling unknown call volumes, average durations, and connected rates. Most finance teams can't answer that cleanly. The deal stalls while estimates get debated.</span>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--amber);min-width:20px;margin-top:2px">02</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.6"><strong style="color:var(--ink)">B2B SaaS is moving toward outcomes anyway.</strong> The broader trend is clear — buyers want to pay for results, not usage. For BFSI collections specifically, every rupee spent has a direct equivalent in recovered debt. Outcome-based pricing maps perfectly to how these teams already think about ROI.</span>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--amber);min-width:20px;margin-top:2px">03</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.6"><strong style="color:var(--ink)">It reframes what Ringg is.</strong> Per-minute pricing positions Ringg as a tool. Per-outcome pricing positions it as a service that delivers results. That's a fundamentally different conversation — and a stronger one for Series B as well.</span>
+    </div>
+  </div>
+
+  <div class="callout amber">
+    <div class="callout-label">The shift</div>
+    <div class="callout-text">Keep per-minute for SMBs and early-stage customers where it works. Introduce outcome-based pricing as an <strong>enterprise tier</strong> for accounts above a volume threshold — say, 10,000 accounts per month. Customers start on per-minute and graduate to outcome-based as volumes and trust build.</div>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="p-card">
+      <div class="p-head">
+        <div class="p-sublabel">Keep as-is</div>
+        <div class="p-name">Per-minute</div>
+        <div class="p-unit">$0.06–0.10 / connected minute</div>
+      </div>
+      <div class="p-body">
+        <p>The right default for SMBs, low-volume customers, and accounts in early evaluation. Predictable for Ringg's unit economics. Stays as the base tier.</p>
+        <div class="p-point good"><span>↑</span>Simple, transparent, no commitment</div>
+        <div class="p-point note"><span>→</span>Buyer bears all performance risk</div>
+        <div class="p-point note"><span>→</span>Creates procurement friction at enterprise</div>
+      </div>
+    </div>
+
+    <div class="p-card rec">
+      <div class="p-head">
+        <div class="p-sublabel">Recommended enterprise tier</div>
+        <div class="p-name">Per-RPC confirmed</div>
+        <div class="p-unit">₹X per right-party contact</div>
+        <span class="p-rec-tag">Introduce now</span>
+      </div>
+      <div class="p-body">
+        <p>Charge per unique borrower where a right-party contact is confirmed — the AI reached the actual borrower, not a voicemail or wrong number. If the AI can't reach someone, the client doesn't pay.</p>
+        <p>This maps directly to the first metric a Collections Head cares about, and gives the CFO a clean number: cost per borrower reached.</p>
+        <div class="p-point good"><span>↑</span>Maps to how collections teams already measure performance</div>
+        <div class="p-point good"><span>↑</span>Clean number for CFO approval — no modelling required</div>
+        <div class="p-point good"><span>↑</span>Signals confidence in the product</div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-head">
+        <div class="p-sublabel">Aspirational</div>
+        <div class="p-name">Per-PTP captured</div>
+        <div class="p-unit">₹X per Promise-to-Pay logged</div>
+      </div>
+      <div class="p-body">
+        <p>Charge only when the conversation produces a commitment to pay. The ROI case becomes fully undeniable — clients calculate cost per recovered rupee with a simple formula.</p>
+        <p>Requires robust PTP tracking in the analytics layer. Worth piloting with one friendly enterprise account to test unit economics before rolling out.</p>
+        <div class="p-point good"><span>↑</span>Strongest commercial signal — fully outcome-aligned</div>
+        <div class="p-point note"><span>→</span>Higher risk on low-conversion portfolios</div>
+        <div class="p-point note"><span>→</span>Needs tighter conversation design and outcome tracking</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-body" style="margin-top:8px">One secondary benefit: outcome-based pricing changes the investor narrative. Per-minute pricing positions Ringg as a usage-based tool. Per-RPC or per-PTP positions it as an outcome-aligned platform — a structurally stronger framing for Series B.</p>
+</div>
+
+<div class="divider"><hr></div>
+
+<!-- NORTH STAR -->
+<div class="section fade-in" id="north-star">
+  <div class="sec-tag"><span class="sec-dot"></span>What success looks like</div>
+  <div class="northstar">
+    <div class="ns-tag">12-month north star</div>
+    <h3 class="ns-title">Channel and pricing<br><em>compounding together</em></h3>
+    <p class="ns-sub">Distribution brings more enterprise conversations in the door. Outcome-based pricing means more of those conversations convert without stalling in procurement. Together they change the shape of the revenue curve — and strengthen the story told at Series B.</p>
+    <div class="ns-metrics">
+      <div>
+        <div class="ns-val">1 anchor deal</div>
+        <div class="ns-label">Credgenics or Firstsource signed within 90 days. Joint case study published with a named NBFC client.</div>
+      </div>
+      <div>
+        <div class="ns-val">5 → 50+</div>
+        <div class="ns-label">Partner-sourced pipeline. One Credgenics integration creates more inbound than months of direct outreach.</div>
+      </div>
+      <div>
+        <div class="ns-val">Per-RPC live</div>
+        <div class="ns-label">Outcome-based pricing introduced as an enterprise tier within 60 days. First 3 enterprise deals closed on the new model.</div>
+      </div>
+      <div>
+        <div class="ns-val">10M conversations</div>
+        <div class="ns-label">Ringg's stated 2027 target. Channel + outcome pricing together are the two levers most likely to get there.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-text">
+    Ringg AI · Revenue strategy exploration<br>
+    Partner targets and pricing models are proposals for discussion. Click tabs above to explore each channel partner.
+  </div>
+</footer>
+
+<script>
+function switchTab(index) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+  document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === index));
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
